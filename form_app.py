@@ -1,18 +1,29 @@
 import streamlit as st
 import urllib.parse
+import pandas as pd
 
-# Get vehicle ID from URL
-vehicle_id = st.query_params["vid"] if "vid" in st.query_params else ""
+# Load QR mapping
+df = pd.read_csv("D:/GridCops_Carscanner/qr_pool.csv")  # Adjust path if needed
 
-if vehicle_id:
-    st.markdown(f"**Vehicle:** `{vehicle_id}`")
-else:
-    st.warning("⚠️ Vehicle ID not found in URL.")
+# Get QR ID from URL
+query_params = st.experimental_get_query_params()
+qr_id = query_params.get("id", [""])[0]
+
+# Lookup vehicle number
+vehicle_id = ""
+record = df[df["QR_ID"] == qr_id]
+if not record.empty and record["Assigned"].values[0] == "Yes":
+    vehicle_id = record["Vehicle"].values[0]
 
 # Branding header
 st.title("🛡️ Reneigo Scan")
 st.subheader("Presented by GridCops Enterprises")
-st.markdown(f"**Vehicle:** `{vehicle_id}`")
+
+# Show vehicle info
+if vehicle_id:
+    st.markdown(f"**Vehicle:** `{vehicle_id}`")
+else:
+    st.warning("⚠️ QR not assigned or vehicle not found.")
 
 # Reason selection
 reason = st.radio("Why are you contacting the owner?", [
@@ -25,7 +36,7 @@ reason = st.radio("Why are you contacting the owner?", [
 ])
 
 # WhatsApp link
-if st.button("Send Alert"):
+if st.button("Send Alert") and vehicle_id:
     message = f"{reason} via Reneigo Scan — Vehicle {vehicle_id}"
     encoded = urllib.parse.quote(message)
     wa_link = f"https://wa.me/918700832234?text={encoded}"  # Replace with your relay number
