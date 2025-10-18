@@ -1,5 +1,5 @@
 QR_ID,LongLink,ShortLink,QRPath,Assigned,Vehicle,Owner
-1,https://reneigo-scan.streamlit.app/?id=001,https://reneigo-scan.streamlit.app/?id=001,D:/GridCops_Carscanner/QRs/QR_001.png,No,,
+1,https://reneigo-scan.streamlit.app/?id=001,https://reneigo-scan.streamlit.app/?id=001,D:/GridCops_Carscanner/QRs/QR_001.png,Yes,PB10XY1234,
 2,https://reneigo-scan.streamlit.app/?id=002,https://reneigo-scan.streamlit.app/?id=002,D:/GridCops_Carscanner/QRs/QR_002.png,No,,
 3,https://reneigo-scan.streamlit.app/?id=003,https://reneigo-scan.streamlit.app/?id=003,D:/GridCops_Carscanner/QRs/QR_003.png,No,,
 4,https://reneigo-scan.streamlit.app/?id=004,https://reneigo-scan.streamlit.app/?id=004,D:/GridCops_Carscanner/QRs/QR_004.png,No,,
