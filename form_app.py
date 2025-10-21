@@ -24,32 +24,5 @@ st.write(f"🧪 Available IDs: {df['QR_ID'].tolist()}")
 # Match record
 record = df[(df["QR_ID"] == qr_id) & (df["Assigned"] == "Yes")]
 
-if not record.empty:
-    vehicle_id = str(record["Vehicle"].values[0]).strip()
-    st.success(f"✅ Vehicle: {vehicle_id}")
-    
-    # Optional: Show QR image
-    qr_path = str(record["QRPath"].values[0]).strip()
-    if qr_path and os.path.exists(qr_path):
-        st.image(qr_path, caption="QR Code", width=200)
 
-    # Alert form
-    st.subheader("Why are you contacting the owner?")
-    reason = st.radio("Select a reason:", [
-        "No Parking",
-        "Getting Towed",
-        "Emergency Contact",
-        "Blocking Gate",
-        "Suspicious Activity",
-        "Accident Alert"
-    ])
-    # WhatsApp message template
-vehicle_id = str(record["Vehicle"].values[0]).strip()
-owner_number = "91XXXXXXXXXX"  # Replace with actual number or pull from CSV if available
-message = f"Alert: {reason} regarding vehicle {vehicle_id} scanned via GridCops QR."
 
-whatsapp_link = f"https://wa.me/{owner_number}?text={message.replace(' ', '%20')}"
-
-# Submit button
-if st.button("🚨 Submit Alert"):
-    st.markdown(f"[Click here to send WhatsApp alert]({whatsapp_link})", unsafe_allow_html=True)
