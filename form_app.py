@@ -3,7 +3,8 @@ import pandas as pd
 import urllib.parse
 
 # Load CSV
-df = pd.read_csv("D:/GridCops_Carscanner/qr_pool.csv")
+df = pd.read_csv("qr_pool.csv")
+
 df["QR_ID"] = df["QR_ID"].astype(str).str.strip()
 df["Assigned"] = df["Assigned"].astype(str).str.strip()
 
