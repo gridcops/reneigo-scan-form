@@ -1,53 +1,49 @@
 import streamlit as st
 import pandas as pd
-import urllib.parse
+import os
 
-# Load CSV
+st.set_page_config(page_title="Reneigo Scan", page_icon="🚗", layout="centered")
+
+st.title("🚨 Reneigo Scan")
+st.caption("Presented by GridCops Enterprises")
+
+# Read query parameter
+query_params = st.query_params
+qr_id_list = query_params.get("id")
+qr_id = str(qr_id_list[0]).strip() if qr_id_list else ""
+
+# Load and clean CSV
 df = pd.read_csv("qr_pool.csv")
-
 df["QR_ID"] = df["QR_ID"].astype(str).str.strip()
 df["Assigned"] = df["Assigned"].astype(str).str.strip()
 
-# Get QR ID from URL
-query_params = st.query_params
-qr_id_list = query_params.get("id")
-qr_id = qr_id_list[0].strip() if qr_id_list else ""
-
-st.title("🛡️ Reneigo Scan")
-st.subheader("Presented by GridCops Enterprises")
-st.write(f"🔍 Scanned QR ID: `{qr_id}`")
+# Debug trace
+st.write(f"🧪 Scanned QR ID: '{qr_id}'")
+st.write(f"🧪 Available IDs: {df['QR_ID'].tolist()}")
 
 # Match record
-record = df[df["QR_ID"] == qr_id]
-if not record.empty:
-    assigned = str(record["Assigned"].values[0]).strip()
-    vehicle = str(record["Vehicle"].values[0]).strip()
-    if assigned == "Yes" and vehicle:
-        vehicle_id = vehicle
+record = df[(df["QR_ID"] == qr_id) & (df["Assigned"] == "Yes")]
 
-vehicle_id = ""
 if not record.empty:
-    assigned = record["Assigned"].values[0]
-    vehicle = record["Vehicle"].values[0]
-    if assigned == "Yes" and vehicle:
-        vehicle_id = vehicle
+    vehicle_id = str(record["Vehicle"].values[0]).strip()
+    st.success(f"✅ Vehicle: {vehicle_id}")
+    
+    # Optional: Show QR image
+    qr_path = str(record["QRPath"].values[0]).strip()
+    if qr_path and os.path.exists(qr_path):
+        st.image(qr_path, caption="QR Code", width=200)
 
-# Show result
-if vehicle_id:
-    st.success(f"🚗 Vehicle: `{vehicle_id}`")
+    # Alert form
+    st.subheader("Why are you contacting the owner?")
+    reason = st.radio("Select a reason:", [
+        "No Parking",
+        "Getting Towed",
+        "Emergency Contact",
+        "Blocking Gate",
+        "Suspicious Activity",
+        "Accident Alert"
+    ])
+    st.button("🚨 Submit Alert")
 else:
     st.warning("⚠️ QR not assigned or vehicle not found.")
     st.info("If this is unexpected, please contact GridCops support.")
-
-# Alert form
-with st.form("alert_form"):
-    reason = st.radio("Why are you contacting the owner?", [
-        "🚫 No Parking", "🚓 Getting Towed", "🚨 Emergency Contact",
-        "📦 Blocking Gate", "🧍 Suspicious Activity", "🚑 Accident Alert"
-    ])
-    submitted = st.form_submit_button("Send Alert")
-    if submitted and vehicle_id:
-        message = f"{reason} via Reneigo Scan — Vehicle {vehicle_id}"
-        encoded = urllib.parse.quote(message)
-        wa_link = f"https://wa.me/918700832234?text={encoded}"
-        st.markdown(f"[Click to send WhatsApp alert]({wa_link})", unsafe_allow_html=True)
