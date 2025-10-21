@@ -43,7 +43,13 @@ if not record.empty:
         "Suspicious Activity",
         "Accident Alert"
     ])
-    st.button("🚨 Submit Alert")
-else:
-    st.warning("⚠️ QR not assigned or vehicle not found.")
-    st.info("If this is unexpected, please contact GridCops support.")
+    # WhatsApp message template
+vehicle_id = str(record["Vehicle"].values[0]).strip()
+owner_number = "91XXXXXXXXXX"  # Replace with actual number or pull from CSV if available
+message = f"Alert: {reason} regarding vehicle {vehicle_id} scanned via GridCops QR."
+
+whatsapp_link = f"https://wa.me/{owner_number}?text={message.replace(' ', '%20')}"
+
+# Submit button
+if st.button("🚨 Submit Alert"):
+    st.markdown(f"[Click here to send WhatsApp alert]({whatsapp_link})", unsafe_allow_html=True)
