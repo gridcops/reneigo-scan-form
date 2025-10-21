@@ -6,7 +6,7 @@ QR_ID,Vehicle,LongLink,ShortLink,QRPath,Assigned
 5,PB10AB5679,https://reneigoscan-form.streamlit.app/?id=5,,QRs\QR_5.png,Yes
 6,PB10AB5680,https://reneigoscan-form.streamlit.app/?id=6,,QRs\QR_6.png,Yes
 7,PB10AB5681,https://reneigoscan-form.streamlit.app/?id=7,,QRs\QR_7.png,Yes
-8,PB10AB5682,https://reneigoscan-form.streamlit.app/?id=8,,QRs\QR_8.png,Yes
+8,PB10AB5682,https://reneigoscan-form.streamlit.app/?id=8,,QRs\QR_8.png,No
 9,PB10AB5683,https://reneigoscan-form.streamlit.app/?id=9,,QRs\QR_9.png,Yes
 10,,https://reneigoscan-form.streamlit.app/?id=10,,QRs\QR_10.png,
 11,,https://reneigoscan-form.streamlit.app/?id=11,,QRs\QR_11.png,
@@ -99,3 +99,4 @@ QR_ID,Vehicle,LongLink,ShortLink,QRPath,Assigned
 98,,https://reneigoscan-form.streamlit.app/?id=98,,QRs\QR_98.png,
 99,,https://reneigoscan-form.streamlit.app/?id=99,,QRs\QR_99.png,
 100,,https://reneigoscan-form.streamlit.app/?id=100,,QRs\QR_100.png,
+
