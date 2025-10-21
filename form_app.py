@@ -25,7 +25,7 @@ record = df[(df["QR_ID"] == qr_id) & (df["Assigned"] == "Yes")]
 if not record.empty:
     vehicle_id = str(record["Vehicle"].values[0]).strip()
     qr_path = str(record["QRPath"].values[0]).strip()
-    owner_number = "91XXXXXXXXXX"  # Replace with actual number or pull from CSV
+    owner_number = "918700832234"  # Replace with actual number or pull from CSV
 
     st.success(f"✅ Vehicle: {vehicle_id}")
     if qr_path and os.path.exists(qr_path):
@@ -48,3 +48,4 @@ if not record.empty:
 else:
     st.warning("⚠️ QR not assigned or vehicle not found.")
     st.info("If this is unexpected, please contact GridCops support.")
+
