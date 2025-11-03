@@ -10,7 +10,7 @@ st.caption("Presented by GridCops Enterprises")
 
 # Load and clean CSV
 df = pd.read_csv("qr_pool.csv")
-df["VehicleNo"] = df["VehicleNo"].astype(str).str.strip()
+df["VehicleNo"] = df["VehicleNo"].astype(str).str.strip().str.upper()
 df["Status"] = df["Status"].astype(str).str.strip()
 
 # Input from user
@@ -20,14 +20,21 @@ if vehicle_id:
     record = df[(df["VehicleNo"] == vehicle_id) & (df["Status"] == "Active")]
 
     if not record.empty:
-        qr_path = str(record["QRPath"].values[0]).strip()
-        owner_number = "918700832234"  # Your number as mediator
-
         st.success(f"✅ Vehicle Found: {vehicle_id}")
 
+        # Owner number fallback
+        owner_number = str(record["OwnerNumber"].values[0]).strip()
+        if not owner_number:
+            owner_number = "918700832234"  # Default mediator number
+
+        # Show QR image if available
+        qr_path = str(record["QRPath"].values[0]).strip()
         if qr_path and os.path.exists(qr_path):
             st.image(qr_path, caption="QR Code", width=200)
+        else:
+            st.info("QR image not available for this vehicle.")
 
+        # Reason selection
         reason = st.radio("Why are you contacting the owner?", [
             "No Parking",
             "Getting Towed",
@@ -37,13 +44,14 @@ if vehicle_id:
             "Accident Alert"
         ])
 
+        # WhatsApp alert link
         message = f"Alert: {reason} regarding vehicle {vehicle_id} scanned via GridCops QR."
         whatsapp_link = f"https://wa.me/{owner_number}?text={message.replace(' ', '%20')}"
 
         if st.button("🚨 Submit Alert"):
             st.markdown(f"[Click here to send WhatsApp alert]({whatsapp_link})", unsafe_allow_html=True)
 
-            # Optional: log the alert
+            # Log the alert
             log_entry = pd.DataFrame([{
                 "VehicleNo": vehicle_id,
                 "Reason": reason,
