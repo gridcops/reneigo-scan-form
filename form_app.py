@@ -22,10 +22,8 @@ if vehicle_id:
     if not record.empty:
         st.success(f"✅ Vehicle Found: {vehicle_id}")
 
-        # Owner number fallback
-        owner_number = str(record["OwnerNumber"].values[0]).strip()
-        if not owner_number:
-            owner_number = "918700832234"  # Default mediator number
+        # Always send to mediator
+        owner_number = "918700832234"
 
         # Show QR image if available
         qr_path = str(record["QRPath"].values[0]).strip()
