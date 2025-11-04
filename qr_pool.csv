@@ -1,7 +1,7 @@
 QR_ID,VehicleNo,Status,QRPath
 1,PB10AB1234,Active,
 2,PB10AB1235,,
-3,PB10AB1236,,
+3,PB10AB1236,Active,
 4,PB10AB5678,,
 5,PB10AB5679,,
 6,PB10AB5680,,
@@ -99,5 +99,6 @@ QR_ID,VehicleNo,Status,QRPath
 98,,,
 99,,,
 100,,,
+
 
 
