@@ -67,6 +67,5 @@ if vehicle_id:
 
 # Optional: Show recent alerts
 if os.path.exists("alert_log.csv"):
-    st.subheader("📋 Recent Alerts")
-    log_df = pd.read_csv("alert_log.csv")
-    st.dataframe(log_df.tail(10))
+  
+
