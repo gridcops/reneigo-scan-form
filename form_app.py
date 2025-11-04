@@ -6,7 +6,6 @@ from datetime import datetime
 # Page setup
 st.set_page_config(page_title="Reneigo Scan", page_icon="🚗", layout="centered")
 st.title("🚨 Reneigo Scan")
-st.caption("Presented by GridCops Enterprises")
 
 # Ensure alert log exists
 if not os.path.exists("alert_log.csv"):
@@ -52,9 +51,7 @@ if vehicle_id:
             whatsapp_link = f"https://wa.me/{owner_number}?text={message.replace(' ', '%20').replace('\n', '%0A')}"
 
             if st.button("🚨 Submit Alert"):
-                st.markdown(f"[Click to send WhatsApp alert]({whatsapp_link})", unsafe_allow_html=True)
-
-                # Log alert with SLA status
+                # Log alert silently
                 log_entry = pd.DataFrame([{
                     "VehicleNo": vehicle_id,
                     "Reason": reason,
@@ -63,7 +60,10 @@ if vehicle_id:
                     "Status": "Pending"
                 }])
                 log_entry.to_csv("alert_log.csv", mode="a", header=False, index=False)
-                st.success("✅ Alert submitted and logged.")
+
+                # Show WhatsApp link with clear instruction
+                st.markdown(f"[📲 Click here to send WhatsApp alert]({whatsapp_link})", unsafe_allow_html=True)
+                st.info("Your alert has been prepared. Please tap the link above to notify the vehicle owner.")
         else:
             st.warning("⚠️ Please enter your mobile number.")
     else:
@@ -73,8 +73,7 @@ if vehicle_id:
 # Show only user's own alerts
 if os.path.exists("alert_log.csv"):
     st.subheader("📋 Your Recent Alerts")
-    contact_number = st.session_state.get("contact_number", "")
-    if contact_number:
-        log_df = pd.read_csv("alert_log.csv")
+    log_df = pd.read_csv("alert_log.csv")
+    if "contact_number" in locals() and contact_number:
         user_alerts = log_df[log_df["ContactNumber"] == contact_number]
         st.dataframe(user_alerts.tail(5))
