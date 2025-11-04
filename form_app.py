@@ -42,21 +42,29 @@ if vehicle_id:
             "Accident Alert"
         ])
 
-        # WhatsApp alert link
-        message = f"Alert: {reason} regarding vehicle {vehicle_id} scanned via GridCops QR."
-        whatsapp_link = f"https://wa.me/{owner_number}?text={message.replace(' ', '%20')}"
+        # Contact number input
+        contact_number = st.text_input("Your Mobile Number (for callback)").strip()
 
-        if st.button("🚨 Submit Alert"):
-            st.markdown(f"[Click here to send WhatsApp alert]({whatsapp_link})", unsafe_allow_html=True)
+        if contact_number:
+            # WhatsApp alert message
+            message = f"🚨 Alert: {reason} regarding vehicle {vehicle_id}.\nPlease call back: +91-{contact_number}"
+            whatsapp_link = f"https://wa.me/{owner_number}?text={message.replace(' ', '%20').replace('\n', '%0A')}"
 
-            # Log the alert
-            log_entry = pd.DataFrame([{
-                "VehicleNo": vehicle_id,
-                "Reason": reason,
-                "Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            }])
-            log_entry.to_csv("alert_log.csv", mode="a", header=False, index=False)
+            if st.button("🚨 Submit Alert"):
+                st.markdown(f"[Click here to send WhatsApp alert]({whatsapp_link})", unsafe_allow_html=True)
 
+                # Log the alert
+                log_entry = pd.DataFrame([{
+                    "VehicleNo": vehicle_id,
+                    "Reason": reason,
+                    "ContactNumber": contact_number,
+                    "Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                }])
+                log_entry.to_csv("alert_log.csv", mode="a", header=False, index=False)
+
+                st.success("✅ Alert submitted and logged successfully.")
+        else:
+            st.warning("⚠️ Please enter your mobile number for callback.")
     else:
         st.warning("⚠️ Vehicle not found or not active.")
         st.info("Please check the number or contact Reneigo Scan support.")
