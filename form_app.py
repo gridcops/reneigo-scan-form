@@ -6,6 +6,11 @@ from datetime import datetime
 # Page setup
 st.set_page_config(page_title="Reneigo Scan", page_icon="🚗", layout="centered")
 st.title("🚨 Reneigo Scan")
+st.caption("Presented by GridCops Enterprises")
+
+# Ensure alert log exists
+if not os.path.exists("alert_log.csv"):
+    pd.DataFrame(columns=["VehicleNo", "Reason", "ContactNumber", "Timestamp", "Status"]).to_csv("alert_log.csv", index=False)
 
 # Load QR pool
 pool_path = "qr_pool.csv"
@@ -57,7 +62,7 @@ if vehicle_id:
                     "Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                     "Status": "Pending"
                 }])
-                log_entry.to_csv("alert_log.csv", mode="a", header=not os.path.exists("alert_log.csv"), index=False)
+                log_entry.to_csv("alert_log.csv", mode="a", header=False, index=False)
                 st.success("✅ Alert submitted and logged.")
         else:
             st.warning("⚠️ Please enter your mobile number.")
@@ -65,7 +70,11 @@ if vehicle_id:
         st.warning("⚠️ Vehicle not found or not active.")
         st.info("Check the number or contact GridCops support.")
 
-# Optional: Show recent alerts
+# Show only user's own alerts
 if os.path.exists("alert_log.csv"):
-  
-
+    st.subheader("📋 Your Recent Alerts")
+    contact_number = st.session_state.get("contact_number", "")
+    if contact_number:
+        log_df = pd.read_csv("alert_log.csv")
+        user_alerts = log_df[log_df["ContactNumber"] == contact_number]
+        st.dataframe(user_alerts.tail(5))
