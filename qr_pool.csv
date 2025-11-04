@@ -1,4 +1,4 @@
-QR_ID,VehicleNo,Status,QRPath
+QR_ID,VehicleNo,Status,QRPath,BackupNumber
 1,PB10AB1234,Active,
 2,PB10AB1235,,
 3,PB10AB1236,Active,
@@ -99,6 +99,7 @@ QR_ID,VehicleNo,Status,QRPath
 98,,,
 99,,,
 100,,,
+
 
 
 
