@@ -5,7 +5,6 @@ import os
 # Page setup
 st.set_page_config(page_title="Reneigo Scan", page_icon="🚗", layout="centered")
 st.title("🚨 Reneigo Scan")
-st.caption("Presented by GridCops Enterprises")
 
 # Load QR pool
 pool_path = "qr_pool.csv"
@@ -54,3 +53,4 @@ if vehicle_id:
     else:
         st.warning("⚠️ Vehicle not found or not active.")
         st.info("Check the number or contact GridCops support.")
+
