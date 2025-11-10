@@ -1,4 +1,4 @@
-QR_ID,VehicleNo,Status,QRPATH,LongLink
+QR_ID,VehicleNo,Status,QRPATH
 1,PB10AB1234,Active,
 2,DL8CAK4803,Active,
 3,DL8CAX0650,Active,
@@ -99,6 +99,7 @@ QR_ID,VehicleNo,Status,QRPATH,LongLink
 98,,,
 99,,,
 100,,,
+
 
 
 
