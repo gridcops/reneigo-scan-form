@@ -1,7 +1,7 @@
-QR_ID,VehicleNo,Status,Car,Address,QRPath,BackupNumber
+QR_ID,VehicleNo,Status,Car,Address,Issue Date,Renew Date
 1,PB10AB1234,Active,
-2,DL8CAK4803,Active,WagnorR,E44 3rd Floor Front
-3,DL8CAX0650,Active,SwiftZXI,E44 1st Floor Front
+2,DL8CAK4803,Active,WagnorR,E44 3rd Floor Front Delhi,9/11/25,8/11/26
+3,DL8CAX0650,Active,SwiftZXI,E44 1st Floor Front Delhi,10/11/25,09/11/26
 4,PB10AB5678,,
 5,PB10AB5679,,
 6,PB10AB5680,,
@@ -99,6 +99,7 @@ QR_ID,VehicleNo,Status,Car,Address,QRPath,BackupNumber
 98,,,
 99,,,
 100,,,
+
 
 
 
